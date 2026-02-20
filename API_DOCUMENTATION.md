@@ -9,8 +9,9 @@
 ## Table of contents
 
 1. [Overview](#overview)
-2. [Authentication](#authentication)
-3. [Endpoints](#endpoints)
+2. [Database tables vs API](#database-tables-vs-api)
+3. [Authentication](#authentication)
+4. [Endpoints](#endpoints)
    - [Health](#health)
    - [Auth](#auth)
    - [Stores](#stores)
@@ -22,8 +23,8 @@
    - [Followers](#followers)
    - [Listerrboard](#listerrboard)
    - [Address](#address)
-4. [Error responses](#error-responses)
-5. [Interactive docs](#interactive-docs)
+5. [Error responses](#error-responses)
+6. [Interactive docs](#interactive-docs)
 
 ---
 
@@ -33,6 +34,42 @@
 - **Rate limiting** is applied per client IP (configurable).
 - **CORS** is enabled; origins are configurable via `CORS_ORIGINS`.
 - **JSON** is used for request and response bodies.
+
+---
+
+## Database tables vs API
+
+There are **25 database tables**. The following mapping shows which tables are exposed via which API section, and which have no public CRUD endpoints yet.
+
+| # | Database table | API section | Endpoints |
+|---|----------------|-------------|-----------|
+| 1 | `user` | Auth | Register, Login (read/write via auth only) |
+| 2 | `user_sessions` | — | No public API (used internally for sessions) |
+| 3 | `seller` | Stores | List, Get, Create, Update, Delete |
+| 4 | `seller_integrations` | — | No public API |
+| 5 | `seller_followers` | Followers | List, Get, Create (follow) |
+| 6 | `connections` | — | No public API |
+| 7 | `addresses` | Address | List, Get, Create, Update, Delete |
+| 8 | `delivery_modes` | — | No public API |
+| 9 | `delivery_zones` | — | No public API |
+| 10 | `delivery_mode_zone_rates` | — | No public API |
+| 11 | `checkout_points` | — | No public API |
+| 12 | `tax_profiles` | — | No public API |
+| 13 | `brands` | — | No public API |
+| 14 | `story` | Stories | List, Get, Create, Update |
+| 15 | `listerrboard` | Listerrboard | List, Get, Create, Update |
+| 16 | `products` | Products | List, Get, Create, Update, Delete |
+| 17 | `product_pricing` | — | No public API |
+| 18 | `inventory` | — | No public API |
+| 19 | `product_attributes` | — | No public API |
+| 20 | `media_assets` | — | No public API |
+| 21 | `product_media_map` | — | No public API |
+| 22 | `story_media_map` | — | No public API |
+| 23 | `catalogue` | Catalogs | List, Get, Create, Update |
+| 24 | `cart` | Cart | List, Get, Create, Update |
+| 25 | `orders` | Orders | List, Get, Create, Update |
+
+**Summary:** 11 resource groups (Auth, Stores, Catalogs, Products, Stories, Cart, Orders, Followers, Listerrboard, Address) have public endpoints; 14 tables are not exposed via dedicated API yet (they can be added later as needed).
 
 ---
 
